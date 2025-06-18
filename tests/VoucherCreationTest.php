@@ -6,7 +6,7 @@ use BoddaSaad\Voucher\VoucherGenerator;
 use Illuminate\Support\Carbon;
 
 it('can generate a code with suffix, prefix and mask', function () {
-    $mask = "******";
+    $mask = '******';
     $generator = new VoucherGenerator(mask: $mask);
     $generator->setPrefix('TEST');
     $generator->setSuffix('TEST');
