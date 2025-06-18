@@ -1,0 +1,52 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up()
+    {
+        $voucherTable = config('discountable.table', 'vouchers');
+        $voucherUsagesTable = config('discountable.usage_table', 'voucher_usages');
+
+        Schema::create($voucherTable, function (Blueprint $table) {
+            $table->id();
+            $table->string('code')->unique();
+            $table->boolean('is_active')->default(true);
+            $table->dateTime('start_date');
+            $table->dateTime('end_date')->nullable();
+            $table->unsignedInteger('quantity')->nullable();
+            $table->unsignedInteger('max_usages_per_model')->nullable();
+            $table->string('discount_type');
+            $table->decimal('discount_value');
+            $table->decimal('maximum_discount_amount')->nullable();
+            $table->decimal('minimum_qualifying_amount')->nullable();
+
+            $table->timestamps();
+        });
+
+        Schema::create($voucherUsagesTable, function (Blueprint $table) use ($voucherTable) {
+            $table->id();
+            $table->foreignId('voucher_id')->constrained($voucherTable)->cascadeOnDelete();
+            $table->string('model_type');
+            $table->bigInteger('model_id');
+            $table->decimal('original_amount');
+            $table->decimal('final_amount');
+            $table->timestamp('redeemed_at');
+            $table->json('meta')->nullable();
+
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down()
+    {
+        Schema::dropIfExists(config('discountable.usage_table', 'voucher_usages'));
+        Schema::dropIfExists(config('discountable.table', 'vouchers'));
+    }
+};
