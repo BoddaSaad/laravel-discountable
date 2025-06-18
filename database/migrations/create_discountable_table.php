@@ -23,6 +23,7 @@ return new class extends Migration
             $table->decimal('discount_value');
             $table->decimal('maximum_discount_amount')->nullable();
             $table->decimal('minimum_qualifying_amount')->nullable();
+            $table->json('data')->nullable();
 
             $table->timestamps();
         });
@@ -30,8 +31,7 @@ return new class extends Migration
         Schema::create($voucherUsagesTable, function (Blueprint $table) use ($voucherTable) {
             $table->id();
             $table->foreignId('voucher_id')->constrained($voucherTable)->cascadeOnDelete();
-            $table->string('model_type');
-            $table->bigInteger('model_id');
+            $table->morphs('model');
             $table->decimal('original_amount');
             $table->decimal('final_amount');
             $table->timestamp('redeemed_at');
