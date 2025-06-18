@@ -6,6 +6,24 @@ use BoddaSaad\Voucher\Enums\DiscountType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * \BoddaSaad\Voucher\Models\Voucher
+ *
+ * @property int $id
+ * @property string $code
+ * @property int|null $quantity
+ * @property string|null $start_date
+ * @property string|null $end_date
+ * @property bool $is_active
+ * @property array|null $data
+ * @property \BoddaSaad\Voucher\Enums\DiscountType $discount_type
+ * @property float|int $discount_value
+ * @property float|int|null $maximum_discount_amount
+ * @property float|int|null $minimum_qualifying_amount
+ * @property int|null $max_usages_per_model
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ */
 class Voucher extends Model
 {
     protected $guarded = [];
