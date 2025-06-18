@@ -2,12 +2,16 @@
 
 namespace BoddaSaad\Voucher\Tests;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Orchestra\Testbench\TestCase as Orchestra;
+use BoddaSaad\Voucher\Facades\Voucher;
 use BoddaSaad\Voucher\VoucherServiceProvider;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {
+    use RefreshDatabase;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -24,14 +28,18 @@ class TestCase extends Orchestra
         ];
     }
 
+    protected function getPackageAliases($app)
+    {
+        return [
+            'Voucher' => Voucher::class,
+        ];
+    }
+
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
 
-        /*
-         foreach (\Illuminate\Support\Facades\File::allFiles(__DIR__ . '/database/migrations') as $migration) {
-            (include $migration->getRealPath())->up();
-         }
-         */
+        $migration = include __DIR__.'/../database/migrations/create_discountable_table.php.stub';
+        $migration->up();
     }
 }
