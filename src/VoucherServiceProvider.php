@@ -16,14 +16,14 @@ class VoucherServiceProvider extends PackageServiceProvider
             ->hasConfigFile()
             ->hasMigration('create_laravel_discountable_table')
             ->hasCommand(VoucherCommand::class)
-            ->hasInstallCommand(function(InstallCommand $command) {
+            ->hasInstallCommand(function (InstallCommand $command) {
                 $command
                     ->publishConfigFile()
                     ->publishMigrations()
                     ->askToRunMigrations()
                     ->copyAndRegisterServiceProviderInApp()
                     ->askToStarRepoOnGitHub('BoddaSaad/laravel-discountable')
-                    ->endWith(function(InstallCommand $command) {
+                    ->endWith(function (InstallCommand $command) {
                         $command->info('Have a great day <3!');
                     });
             });
