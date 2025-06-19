@@ -12,7 +12,7 @@ final readonly class ModelVoucherUsages
         $usages = $discountContext->model->voucherUsages()->where('voucher_id', $discountContext->voucher->id)->count();
 
         if ($discountContext->voucher->max_usages_per_model && $usages >= $discountContext->voucher->max_usages_per_model) {
-            throw new \Exception(" Maximum voucher usages reached for this model.");
+            throw new \Exception(' Maximum voucher usages reached for this model.');
         }
 
         return $next($discountContext);

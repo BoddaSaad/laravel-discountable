@@ -9,8 +9,8 @@ final readonly class VoucherIsActive
 {
     public function handle(DiscountContext $discountContext, Closure $next)
     {
-        if (!$discountContext->voucher->is_active) {
-            throw new \Exception("Voucher is inactive");
+        if (! $discountContext->voucher->is_active) {
+            throw new \Exception('Voucher is inactive');
         }
 
         return $next($discountContext);

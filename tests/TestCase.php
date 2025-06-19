@@ -5,10 +5,10 @@ namespace BoddaSaad\Voucher\Tests;
 use BoddaSaad\Voucher\Facades\Voucher;
 use BoddaSaad\Voucher\VoucherServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\Attributes\WithMigration;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Illuminate\Foundation\Auth\User;
 
 #[WithMigration()]
 class TestCase extends Orchestra
@@ -26,7 +26,7 @@ class TestCase extends Orchestra
         User::forceCreate([
             'name' => 'User',
             'email' => 'test@example.com',
-            'password' => 'password'
+            'password' => 'password',
         ]);
     }
 

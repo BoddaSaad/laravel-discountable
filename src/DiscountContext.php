@@ -2,8 +2,8 @@
 
 namespace BoddaSaad\Voucher;
 
-use Illuminate\Database\Eloquent\Model;
 use BoddaSaad\Voucher\Models\Voucher;
+use Illuminate\Database\Eloquent\Model;
 
 class DiscountContext
 {

@@ -8,9 +8,9 @@ use BoddaSaad\Voucher\Models\VoucherUsage;
 use BoddaSaad\Voucher\Pipelines\ApplyDiscount;
 use BoddaSaad\Voucher\Pipelines\IsAmountQualified;
 use BoddaSaad\Voucher\Pipelines\ModelVoucherUsages;
+use BoddaSaad\Voucher\Pipelines\VoucherDateValidity;
 use BoddaSaad\Voucher\Pipelines\VoucherIsActive;
 use BoddaSaad\Voucher\Pipelines\VoucherQuantityValidity;
-use BoddaSaad\Voucher\Pipelines\VoucherDateValidity;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Pipeline\Pipeline;
 
@@ -26,7 +26,7 @@ trait CanRedeemVouchers
         $voucher = Voucher::whereCode($code)->first();
 
         if (! $voucher) {
-            throw new \Exception("Voucher does not exist");
+            throw new \Exception('Voucher does not exist');
         }
 
         $discountContext = new DiscountContext($voucher, $this, $amount);
@@ -40,7 +40,7 @@ trait CanRedeemVouchers
                     VoucherQuantityValidity::class,
                     IsAmountQualified::class,
                     ModelVoucherUsages::class,
-                    ApplyDiscount::class
+                    ApplyDiscount::class,
                 ])
                 ->then(function ($context) {
                     return (object) [
