@@ -132,14 +132,14 @@ class Voucher
                 ])
                 ->then(function ($context) {
                     return (object) [
-                        'status' => true,
+                        'valid' => true,
                         'final_amount' => $context->discountAmount,
                         'voucher_id' => $context->voucher->id,
                     ];
                 });
         } catch (\Exception $e) {
             return (object) [
-                'status' => false,
+                'valid' => false,
                 'message' => $e->getMessage(),
             ];
         }

@@ -32,7 +32,7 @@ trait CanRedeemVouchers
     {
         $validity = $this->checkVoucher($code, $amount);
 
-        if (! $validity->status) {
+        if (! $validity->valid) {
             return false;
         }
 
