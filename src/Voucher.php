@@ -4,7 +4,14 @@ namespace BoddaSaad\Voucher;
 
 use BoddaSaad\Voucher\Enums\DiscountType;
 use BoddaSaad\Voucher\Models\Voucher as VoucherModel;
+use BoddaSaad\Voucher\Pipelines\ApplyDiscount;
+use BoddaSaad\Voucher\Pipelines\IsAmountQualified;
+use BoddaSaad\Voucher\Pipelines\ModelVoucherUsages;
+use BoddaSaad\Voucher\Pipelines\VoucherDateValidity;
+use BoddaSaad\Voucher\Pipelines\VoucherIsActive;
+use BoddaSaad\Voucher\Pipelines\VoucherQuantityValidity;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pipeline\Pipeline;
 
 class Voucher
 {
@@ -108,5 +115,32 @@ class Voucher
         $this->voucherModel->save();
 
         return $this->voucherModel;
+    }
+
+    public function checkVoucher(DiscountContext $discountContext): object
+    {
+        try {
+            return app(Pipeline::class)
+                ->send($discountContext)
+                ->through([
+                    VoucherIsActive::class,
+                    VoucherDateValidity::class,
+                    VoucherQuantityValidity::class,
+                    IsAmountQualified::class,
+                    ModelVoucherUsages::class,
+                    ApplyDiscount::class,
+                ])
+                ->then(function ($context) {
+                    return (object) [
+                        'status' => true,
+                        'final_amount' => $context->discountAmount,
+                    ];
+                });
+        } catch (\Exception $e) {
+            return (object) [
+                'status' => false,
+                'message' => $e->getMessage(),
+            ];
+        }
     }
 }
