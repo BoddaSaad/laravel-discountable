@@ -18,21 +18,21 @@ beforeEach(function () {
 });
 
 it('cannot apply voucher with unqualified amount', function () {
-    $response = $this->user->canRedeem($this->voucher->code, 40);
+    $response = $this->user->checkVoucher($this->voucher->code, 40);
 
     expect($response->status)->toBeFalse();
 });
 
 it('cannot apply voucher before start date', function () {
     Carbon::setTestNow('2023-01-01');
-    $response = $this->user->canRedeem($this->voucher->code, 100);
+    $response = $this->user->checkVoucher($this->voucher->code, 100);
 
     expect($response->status)->toBeFalse();
 });
 
 it('cannot apply voucher after end date', function () {
     Carbon::setTestNow('2026-01-01');
-    $response = $this->user->canRedeem($this->voucher->code, 100);
+    $response = $this->user->checkVoucher($this->voucher->code, 100);
 
     expect($response->status)->toBeFalse();
 });
@@ -41,7 +41,7 @@ it('cannot apply voucher with no quantity', function () {
     $this->voucher->quantity = 0;
     $this->voucher->save();
 
-    $response = $this->user->canRedeem($this->voucher->code, 100);
+    $response = $this->user->checkVoucher($this->voucher->code, 100);
 
     expect($response->status)->toBeFalse();
 });
@@ -50,7 +50,7 @@ it('cannot apply inactive voucher', function () {
     $this->voucher->is_active = false;
     $this->voucher->save();
 
-    $response = $this->user->canRedeem($this->voucher->code, 100);
+    $response = $this->user->checkVoucher($this->voucher->code, 100);
 
     expect($response->status)->toBeFalse();
 });
@@ -62,7 +62,7 @@ it('cannot apply voucher for the same user more than the allowed times', functio
         'final_amount' => 90,
     ]);
 
-    $response = $this->user->canRedeem($this->voucher->code, 100);
+    $response = $this->user->checkVoucher($this->voucher->code, 100);
 
     expect($response->status)->toBeFalse();
 });
@@ -73,13 +73,13 @@ it('cannot apply voucher with amount less than fixed discount', function () {
     $this->voucher->minimum_qualifying_amount = null;
     $this->voucher->save();
 
-    $response = $this->user->canRedeem($this->voucher->code, 40);
+    $response = $this->user->checkVoucher($this->voucher->code, 40);
 
     expect($response->status)->toBeFalse();
 });
 
 it('can apply voucher with valid conditions', function () {
-    $response = $this->user->canRedeem($this->voucher->code, 100);
+    $response = $this->user->checkVoucher($this->voucher->code, 100);
 
     expect($response->status)->toBeTrue()
         ->and((int) $response->final_amount)->toBe(90);
