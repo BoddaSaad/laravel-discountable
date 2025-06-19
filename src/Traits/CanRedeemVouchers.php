@@ -21,7 +21,7 @@ trait CanRedeemVouchers
         return $this->morphMany(VoucherUsage::class, 'model');
     }
 
-    public function canRedeem($code, $amount): object
+    public function checkVoucher($code, $amount): object
     {
         $voucher = Voucher::whereCode($code)->first();
 
