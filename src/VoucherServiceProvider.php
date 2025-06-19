@@ -14,7 +14,7 @@ class VoucherServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-discountable')
             ->hasConfigFile()
-            ->hasMigration('create_laravel_discountable_table')
+            ->hasMigration('create_discountable_tables')
             ->hasCommand(VoucherCommand::class)
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
