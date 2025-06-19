@@ -1,9 +1,16 @@
 {
     "name": "boddasaad/laravel-discountable",
-    "description": "This is my package laravel-discountable",
+    "description": "Allow your laravel models to redeem vouchers and apply discounts.",
     "keywords": [
         "Abdur-Rahman Saad",
         "laravel",
+        "BoddaSaad",
+        "voucher",
+        "discount",
+        "coupon",
+        "redeem",
+        "discountable",
+        "discounts",
         "laravel-discountable"
     ],
     "homepage": "https://github.com/boddasaad/laravel-discountable",
