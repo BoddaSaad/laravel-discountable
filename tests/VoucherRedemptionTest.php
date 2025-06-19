@@ -77,3 +77,10 @@ it('cannot apply voucher with amount less than fixed discount', function () {
 
     expect($response->status)->toBeFalse();
 });
+
+it('can apply voucher with valid conditions', function () {
+    $response = $this->user->canRedeem($this->voucher->code, 100);
+
+    expect($response->status)->toBeTrue()
+        ->and((int) $response->final_amount)->toBe(90);
+});
