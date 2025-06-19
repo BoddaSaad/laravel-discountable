@@ -21,7 +21,7 @@ trait CanRedeemVouchers
         return $this->morphMany(VoucherUsage::class, 'model');
     }
 
-    public function canRedeem($code, $amount)
+    public function canRedeem($code, $amount): object
     {
         $voucher = Voucher::whereCode($code)->first();
 
@@ -42,14 +42,14 @@ trait CanRedeemVouchers
                     ModelVoucherUsages::class,
                     ApplyDiscount::class
                 ])
-                ->then(function ($context) {;
-                    return [
+                ->then(function ($context) {
+                    return (object) [
                         'status' => true,
                         'final_amount' => $context->discountAmount,
                     ];
                 });
         } catch (\Exception $e) {
-            return [
+            return (object) [
                 'status' => false,
                 'message' => $e->getMessage(),
             ];
