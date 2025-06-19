@@ -116,6 +116,37 @@ $voucher = Voucher::maximumRedeems(1000)
 | `separator(string $sep)`     | This allows you to specify a custom separator for the voucher code dynamically.                                            |
 | `create()`                   | This method will generate the voucher code and save it to the database. (MUST BE CALLED LAST)                              |
 
+## Applying Vouchers
+To apply a voucher, you can use the `checkVoucher` and `redeemVoucher` methods provided by the `CanRedeemVouchers` trait.
+
+### Check Voucher Validity
+This is useful for UI validation before applying the voucher so the user can see if the voucher is valid or not.:
+```php
+auth()->user()->checkVoucher('SUMMER2023', 100);
+```
+This will return an object with the following properties if the voucher is valid:
+```php
+[
+    'valid' => true,
+    'final_amount' => 80, // The amount after applying the voucher
+    'voucher_id' => 1 // The ID of the voucher
+]
+```
+If the voucher is not valid, it will return an object with the following properties:
+```php
+[
+    'valid' => false,
+    'message' => 'Voucher has expired' // The reason why the voucher is not valid
+]
+```
+
+### Redeem Voucher
+To redeem the voucher and apply the discount, you can use the `redeemVoucher` method:
+```php
+auth()->user()->checkVoucher('SUMMER2023', 100);
+// Will return true if the voucher was successfully redeemed, or false if it was not.
+```
+
 ## Testing
 
 ```bash
