@@ -13,10 +13,10 @@ final readonly class ApplyDiscount
         if ($discountContext->voucher->discount_type === DiscountType::PERCENTAGE) {
             $discountAmount = ($discountContext->amount * $discountContext->voucher->discount_value) / 100;
         } else {
-            $discountAmount = $discountContext->amount - $discountContext->voucher->discount_value;
+            $discountAmount = $discountContext->voucher->discount_value;
         }
 
-        $discountContext->discountAmount = $discountAmount;
+        $discountContext->discountAmount = $discountContext->amount - $discountAmount;
 
         return $next($discountContext);
     }
