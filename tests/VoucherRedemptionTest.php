@@ -2,6 +2,7 @@
 
 use BoddaSaad\Voucher\Enums\DiscountType;
 use BoddaSaad\Voucher\Facades\Voucher;
+use BoddaSaad\Voucher\Models\Voucher as VoucherModel;
 use BoddaSaad\Voucher\Tests\Models\User;
 use Illuminate\Support\Carbon;
 
@@ -85,9 +86,10 @@ it('can apply voucher with valid conditions', function () {
         ->and((int) $response->final_amount)->toBe(90);
 });
 
-it('redeems voucher successfully and records usage for valid ', function () {
+it('redeems voucher successfully and records usage for valid and decrement maximum_redeems', function () {
     $response = $this->user->redeemVoucher($this->voucher->code, 100);
 
     expect($response)->toBeTrue()
-        ->and($this->user->voucherUsages()->count())->toBe(1);
+        ->and($this->user->voucherUsages()->count())->toBe(1)
+        ->and(VoucherModel::find($this->voucher->id)->maximum_redeems)->toBe(999);
 });

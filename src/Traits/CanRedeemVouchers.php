@@ -42,6 +42,8 @@ trait CanRedeemVouchers
             'final_amount' => $validity->final_amount,
         ]);
 
+        VoucherModel::find($validity->voucher_id)->decrement('maximum_redeems');
+
         return true;
     }
 }
