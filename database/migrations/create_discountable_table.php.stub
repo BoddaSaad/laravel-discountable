@@ -34,7 +34,7 @@ return new class extends Migration
             $table->morphs('model');
             $table->decimal('original_amount');
             $table->decimal('final_amount');
-            $table->timestamp('redeemed_at');
+            $table->timestamp('redeemed_at')->default(now());
             $table->json('meta')->nullable();
 
             $table->timestamps();

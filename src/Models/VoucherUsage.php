@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class VoucherUsage extends Model
 {
+    protected $guarded = [];
+
     protected $casts = [
         'meta' => 'collection',
     ];

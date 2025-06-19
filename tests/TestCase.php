@@ -6,8 +6,11 @@ use BoddaSaad\Voucher\Facades\Voucher;
 use BoddaSaad\Voucher\VoucherServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Orchestra\Testbench\Attributes\WithMigration;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Illuminate\Foundation\Auth\User;
 
+#[WithMigration()]
 class TestCase extends Orchestra
 {
     use RefreshDatabase;
@@ -19,6 +22,12 @@ class TestCase extends Orchestra
         Factory::guessFactoryNamesUsing(
             fn (string $modelName) => 'BoddaSaad\\Voucher\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
+
+        User::forceCreate([
+            'name' => 'User',
+            'email' => 'test@example.com',
+            'password' => 'password'
+        ]);
     }
 
     protected function getPackageProviders($app)
