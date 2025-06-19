@@ -3,10 +3,10 @@
 namespace BoddaSaad\Voucher\Traits;
 
 use BoddaSaad\Voucher\DiscountContext;
-use BoddaSaad\Voucher\Models\VoucherUsage;
 use BoddaSaad\Voucher\Facades\Voucher;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use BoddaSaad\Voucher\Models\Voucher as VoucherModel;
+use BoddaSaad\Voucher\Models\VoucherUsage;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait CanRedeemVouchers
 {
@@ -32,7 +32,7 @@ trait CanRedeemVouchers
     {
         $validity = $this->checkVoucher($code, $amount);
 
-        if (!$validity->status) {
+        if (! $validity->status) {
             return false;
         }
 
