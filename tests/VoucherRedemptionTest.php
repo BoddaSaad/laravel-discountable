@@ -21,21 +21,21 @@ beforeEach(function () {
 it('cannot apply voucher with unqualified amount', function () {
     $response = $this->user->checkVoucher($this->voucher->code, 40);
 
-    expect($response->status)->toBeFalse();
+    expect($response->valid)->toBeFalse();
 });
 
 it('cannot apply voucher before start date', function () {
     Carbon::setTestNow('2023-01-01');
     $response = $this->user->checkVoucher($this->voucher->code, 100);
 
-    expect($response->status)->toBeFalse();
+    expect($response->valid)->toBeFalse();
 });
 
 it('cannot apply voucher after end date', function () {
     Carbon::setTestNow('2026-01-01');
     $response = $this->user->checkVoucher($this->voucher->code, 100);
 
-    expect($response->status)->toBeFalse();
+    expect($response->valid)->toBeFalse();
 });
 
 it('cannot apply voucher when maximum redeems is zero', function () {
@@ -44,7 +44,7 @@ it('cannot apply voucher when maximum redeems is zero', function () {
 
     $response = $this->user->checkVoucher($this->voucher->code, 100);
 
-    expect($response->status)->toBeFalse();
+    expect($response->valid)->toBeFalse();
 });
 
 it('cannot apply inactive voucher', function () {
@@ -53,7 +53,7 @@ it('cannot apply inactive voucher', function () {
 
     $response = $this->user->checkVoucher($this->voucher->code, 100);
 
-    expect($response->status)->toBeFalse();
+    expect($response->valid)->toBeFalse();
 });
 
 it('cannot apply voucher for the same user more than the allowed times', function () {
@@ -65,7 +65,7 @@ it('cannot apply voucher for the same user more than the allowed times', functio
 
     $response = $this->user->checkVoucher($this->voucher->code, 100);
 
-    expect($response->status)->toBeFalse();
+    expect($response->valid)->toBeFalse();
 });
 
 it('cannot apply voucher with amount less than fixed discount', function () {
@@ -76,13 +76,13 @@ it('cannot apply voucher with amount less than fixed discount', function () {
 
     $response = $this->user->checkVoucher($this->voucher->code, 40);
 
-    expect($response->status)->toBeFalse();
+    expect($response->valid)->toBeFalse();
 });
 
 it('can apply voucher with valid conditions', function () {
     $response = $this->user->checkVoucher($this->voucher->code, 100);
 
-    expect($response->status)->toBeTrue()
+    expect($response->valid)->toBeTrue()
         ->and((int) $response->final_amount)->toBe(90);
 });
 
