@@ -3,6 +3,7 @@
 namespace BoddaSaad\Voucher;
 
 use BoddaSaad\Voucher\Commands\VoucherCommand;
+use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -14,7 +15,18 @@ class VoucherServiceProvider extends PackageServiceProvider
             ->name('laravel-discountable')
             ->hasConfigFile()
             ->hasMigration('create_laravel_discountable_table')
-            ->hasCommand(VoucherCommand::class);
+            ->hasCommand(VoucherCommand::class)
+            ->hasInstallCommand(function(InstallCommand $command) {
+                $command
+                    ->publishConfigFile()
+                    ->publishMigrations()
+                    ->askToRunMigrations()
+                    ->copyAndRegisterServiceProviderInApp()
+                    ->askToStarRepoOnGitHub('BoddaSaad/laravel-discountable')
+                    ->endWith(function(InstallCommand $command) {
+                        $command->info('Have a great day <3!');
+                    });
+            });
     }
 
     public function packageRegistered()
