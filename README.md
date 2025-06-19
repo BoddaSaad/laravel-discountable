@@ -90,7 +90,7 @@ You can create vouchers using the `Voucher` Facade. Here's an example of how to 
 ```php
 use BoddaSaad\Voucher\Facades\Voucher;
 
-$voucher = Voucher::quantity(1000)
+$voucher = Voucher::maximumRedeems(1000)
         ->discount('percentage', 20)
         ->date('2025-01-01', '2025-12-31')
         ->minimumQualifyingAmount(50)
@@ -102,19 +102,19 @@ $voucher = Voucher::quantity(1000)
 
 ### Voucher Facade Methods
 
-| Method                       | Description                                                    |
-|------------------------------|----------------------------------------------------------------|
-| `discount(type, value)`      | Set the discount type (`percentage` or `fixed`) and its value. |
-| `quantity(int $amount)`      | Set the quantity available for this voucher.                   |
-| `date(start, end)`           | Set the start and end date for voucher validity.               |
-| `minimumQualifyingAmount(n)` | Set the minimum amount required to use the voucher.            |
-| `maximumDiscountAmount(n)`   | Set the maximum discount amount that can be applied.           |
-| `maxUsagesPerModel(n)`       | Set the max times a voucher can be used per model (e.g. user). |
-| `data(array $data)`          | Attach additional data to the voucher.                         |
-| `prefix(string $prefix)`     | Set a custom prefix for the voucher code in runtime.           |
-| `suffix(string $suffix)`     | Set a custom suffix for the voucher code in runtime.           |
-| `separator(string $sep)`     | Set a custom separator for the voucher code in runtime.        |
-| `create()`                   | Create the voucher with the specified options.                 |
+| Method                       | Description                                                                                                                |
+|------------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| `discount(type, value)`      | If `type` is `percentage`, `value` should be between 0 and 100. If `type` is `fixed`, `value` should be a positive number. |
+| `maximumRedeems(int $max)`   | This limits how many times the voucher can be redeemed in total.                                                           |
+| `date(start, end)`           | Both dates should be in `Y-m-d` format. The voucher will be valid between these dates.                                     |
+| `minimumQualifyingAmount(n)` | This is the minimum amount that must be spent to apply the voucher.                                                        |
+| `maximumDiscountAmount(n)`   | This limits the discount to a maximum value. For percentage discounts, this is the maximum amount that can be discounted.  |
+| `maxUsagesPerModel(n)`       | This limits how many times a single model can use the voucher.                                                             |
+| `data(array $data)`          | This can be any additional information you want to store with the voucher, such as a description or terms and conditions.  |
+| `prefix(string $prefix)`     | This allows you to specify a prefix for the voucher code dynamically.                                                      |
+| `suffix(string $suffix)`     | This allows you to specify a suffix for the voucher code dynamically.                                                      |
+| `separator(string $sep)`     | This allows you to specify a custom separator for the voucher code dynamically.                                            |
+| `create()`                   | This method will generate the voucher code and save it to the database. (MUST BE CALLED LAST)                              |
 
 ## Testing
 
