@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  *
  * @property int $id
  * @property string $code
- * @property int|null $quantity
+ * @property int|null $maximum_redeems
  * @property string|null $start_date
  * @property string|null $end_date
  * @property bool $is_active

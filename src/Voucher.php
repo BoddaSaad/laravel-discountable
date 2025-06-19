@@ -9,7 +9,7 @@ use BoddaSaad\Voucher\Pipelines\IsAmountQualified;
 use BoddaSaad\Voucher\Pipelines\ModelVoucherUsages;
 use BoddaSaad\Voucher\Pipelines\VoucherDateValidity;
 use BoddaSaad\Voucher\Pipelines\VoucherIsActive;
-use BoddaSaad\Voucher\Pipelines\VoucherQuantityValidity;
+use BoddaSaad\Voucher\Pipelines\VoucherMaximumRedeemsValidity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 
@@ -36,9 +36,9 @@ class Voucher
         return $voucher;
     }
 
-    public function quantity(int $quantity): self
+    public function maximumRedeems(int $max): self
     {
-        $this->voucherModel->quantity = $quantity;
+        $this->voucherModel->maximum_redeems = $max;
 
         return $this;
     }
@@ -125,7 +125,7 @@ class Voucher
                 ->through([
                     VoucherIsActive::class,
                     VoucherDateValidity::class,
-                    VoucherQuantityValidity::class,
+                    VoucherMaximumRedeemsValidity::class,
                     IsAmountQualified::class,
                     ModelVoucherUsages::class,
                     ApplyDiscount::class,

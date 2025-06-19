@@ -18,7 +18,7 @@ it('can generate a code with suffix, prefix and mask', function () {
 });
 
 it('can create a voucher', function () {
-    $voucher = Voucher::quantity(1000)
+    $voucher = Voucher::maximumRedeems(1000)
         ->discount('percentage', 20)
         ->date('2025-01-01', '2025-12-31')
         ->minimumQualifyingAmount(50)
@@ -29,7 +29,7 @@ it('can create a voucher', function () {
 
     expect($voucher)->toBeInstanceOf(\BoddaSaad\Voucher\Models\Voucher::class)
         ->and($voucher->code)->toBeString()
-        ->and($voucher->quantity)->toBe(1000)
+        ->and($voucher->maximum_redeems)->toBe(1000)
         ->and($voucher->discount_type)->toBe(DiscountType::PERCENTAGE)
         ->and($voucher->discount_value)->toBe(20)
         ->and($voucher->start_date)->toEqual(Carbon::parse('2025-01-01'))
@@ -41,7 +41,7 @@ it('can create a voucher', function () {
 });
 
 it('can create a voucher with custom prefix, suffix and separator', function () {
-    $voucher = Voucher::quantity(500)
+    $voucher = Voucher::maximumRedeems(500)
         ->discount('fixed', 10)
         ->date('2025-01-01', '2025-12-31')
         ->prefix('VOUCHER')

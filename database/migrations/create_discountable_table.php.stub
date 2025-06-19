@@ -17,7 +17,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->dateTime('start_date')->default(now());
             $table->dateTime('end_date')->nullable();
-            $table->unsignedInteger('quantity')->nullable();
+            $table->unsignedInteger('maximum_redeems')->nullable();
             $table->unsignedInteger('max_usages_per_model')->nullable();
             $table->string('discount_type');
             $table->decimal('discount_value');

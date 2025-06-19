@@ -6,7 +6,7 @@ use BoddaSaad\Voucher\Tests\Models\User;
 use Illuminate\Support\Carbon;
 
 beforeEach(function () {
-    $this->voucher = Voucher::quantity(1000)
+    $this->voucher = Voucher::maximumRedeems(1000)
         ->discount('percentage', 10)
         ->date('2025-01-01', '2025-12-31')
         ->minimumQualifyingAmount(50)
@@ -37,8 +37,8 @@ it('cannot apply voucher after end date', function () {
     expect($response->status)->toBeFalse();
 });
 
-it('cannot apply voucher with no quantity', function () {
-    $this->voucher->quantity = 0;
+it('cannot apply voucher when maximum redeems is zero', function () {
+    $this->voucher->maximum_redeems = 0;
     $this->voucher->save();
 
     $response = $this->user->checkVoucher($this->voucher->code, 100);
