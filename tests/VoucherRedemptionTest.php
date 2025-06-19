@@ -84,3 +84,10 @@ it('can apply voucher with valid conditions', function () {
     expect($response->status)->toBeTrue()
         ->and((int) $response->final_amount)->toBe(90);
 });
+
+it('redeems voucher successfully and records usage for valid ', function () {
+    $response = $this->user->redeemVoucher($this->voucher->code, 100);
+
+    expect($response)->toBeTrue()
+        ->and($this->user->voucherUsages()->count())->toBe(1);
+});

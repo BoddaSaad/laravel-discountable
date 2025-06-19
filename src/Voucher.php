@@ -134,6 +134,7 @@ class Voucher
                     return (object) [
                         'status' => true,
                         'final_amount' => $context->discountAmount,
+                        'voucher_id' => $context->voucher->id,
                     ];
                 });
         } catch (\Exception $e) {
