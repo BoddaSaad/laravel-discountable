@@ -143,7 +143,7 @@ If the voucher is not valid, it will return an object with the following propert
 ### Redeem Voucher
 To redeem the voucher and apply the discount, you can use the `redeemVoucher` method:
 ```php
-auth()->user()->checkVoucher('SUMMER2023', 100);
+auth()->user()->redeemVoucher('SUMMER2023', 100);
 // Will return true if the voucher was successfully redeemed, or false if it was not.
 ```
 
